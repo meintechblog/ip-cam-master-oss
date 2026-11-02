@@ -1,0 +1,21 @@
+# managed by ip-cam-master, reconcile-id 00000000-0000-0000-0000-000000000001, ts 2026-05-16T00:00:00.000Z
+# WARNING: do not edit by hand — managed by ip-cam-master reconcile loop
+api:
+  listen: 0.0.0.0:1984
+  ui_editor: false
+ffmpeg:
+  bin: ffmpeg
+log:
+  level: info
+rtsp:
+  listen: :8554
+streams:
+  aabbccddee01-low:
+    - exec:ffmpeg -hide_banner -loglevel error -fflags nobuffer -flags low_delay
+      -rtsp_transport tcp -init_hw_device vaapi=intel:/dev/dri/renderD128
+      -filter_hw_device intel -i
+      rtsps://192.0.2.1:7441/<TEST-TOKEN-CARPORT>?enableSrtp -an -r 10 -vf
+      format=nv12|vaapi,hwupload,scale_vaapi=640:360 -c:v mjpeg_vaapi -f mjpeg -
+  aabbccddee02-high:
+    - ffmpeg:rtsps://192.0.2.1:7441/<TEST-TOKEN-FRONTDOOR>?enableSrtp#video=copy#raw=-an#raw=-reconnect
+      1#raw=-reconnect_streamed 1#raw=-reconnect_delay_max 2

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "uuid-thirdparty-1ch",
+    "mac": "11-22-33-aa-bb-cc",
+    "marketName": "Mobotix S15",
+    "name": "Garden Cam",
+    "displayName": "Garden Cam",
+    "type": "Third-party Camera",
+    "modelKey": "camera",
+    "state": "CONNECTED",
+    "host": "192.0.2.51",
+    "isAdopted": true,
+    "isConnected": true,
+    "isThirdPartyCamera": true,
+    "videoCodec": "h264",
+    "channels": [
+      { "id": 0, "name": "Default", "enabled": true, "isRtspEnabled": true, "rtspAlias": "mob1", "bitrate": 3000000, "fps": 25, "width": 1920, "height": 1080 }
+    ]
+  }
+]

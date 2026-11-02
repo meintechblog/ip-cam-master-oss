@@ -1,0 +1,37 @@
+node_modules/
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# Generated at build time (see scripts/build/generate-version.mjs)
+src/lib/version.ts
+
+# Self-update transient state (see src/lib/server/services/update-state-store.ts)
+.update-state/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# SQLite / Data
+data/
+*.db
+*.sqlite
+
+# Claude Code local state
+.claude/

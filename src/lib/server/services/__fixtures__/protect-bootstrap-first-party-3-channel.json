@@ -1,0 +1,38 @@
+[
+  {
+    "id": "uuid-firstparty-3ch",
+    "mac": "AA:BB:CC:11:22:33",
+    "marketName": "G4 Bullet",
+    "name": "Front Door",
+    "displayName": "Front Door",
+    "type": "UVC G4 Bullet",
+    "modelKey": "camera",
+    "state": "CONNECTED",
+    "host": "192.0.2.50",
+    "isAdopted": true,
+    "isConnected": true,
+    "isThirdPartyCamera": false,
+    "videoCodec": "h264",
+    "channels": [
+      { "id": 0, "name": "High",   "enabled": true,  "isRtspEnabled": true,  "rtspAlias": "abc1", "bitrate": 4000000, "fps": 30, "width": 1920, "height": 1080 },
+      { "id": 1, "name": "Medium", "enabled": true,  "isRtspEnabled": true,  "rtspAlias": "abc2", "bitrate": 2000000, "fps": 15, "width": 1280, "height": 720  },
+      { "id": 2, "name": "Low",    "enabled": true,  "isRtspEnabled": false, "rtspAlias": "",     "bitrate": 1000000, "fps": 10, "width": 640,  "height": 360  }
+    ]
+  },
+  {
+    "id": "uuid-nvr",
+    "mac": "FF:EE:DD:CC:BB:AA",
+    "marketName": "UDM Pro",
+    "name": "UDM",
+    "displayName": "UDM",
+    "type": "UDM Pro",
+    "modelKey": "nvr",
+    "state": "CONNECTED",
+    "host": "192.0.2.1",
+    "isAdopted": true,
+    "isConnected": true,
+    "isThirdPartyCamera": false,
+    "videoCodec": "",
+    "channels": []
+  }
+]

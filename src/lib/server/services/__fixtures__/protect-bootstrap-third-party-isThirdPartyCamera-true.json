@@ -1,0 +1,21 @@
+[
+  {
+    "id": "uuid-hikv",
+    "mac": "deadbeef0001",
+    "marketName": "Hikvision DS-2CD2143G2",
+    "name": "Backyard",
+    "displayName": "Backyard",
+    "type": "Third-party Camera",
+    "modelKey": "camera",
+    "state": "CONNECTED",
+    "host": "192.0.2.52",
+    "isAdopted": true,
+    "isConnected": true,
+    "isThirdPartyCamera": true,
+    "videoCodec": "h265",
+    "channels": [
+      { "id": 0, "name": "Main", "enabled": true, "isRtspEnabled": true, "rtspAlias": "hik1", "bitrate": 5000000, "fps": 25, "width": 2560, "height": 1440 },
+      { "id": 1, "name": "Sub",  "enabled": true, "isRtspEnabled": true, "rtspAlias": "hik2", "bitrate": 1500000, "fps": 15, "width": 704,  "height": 480  }
+    ]
+  }
+]

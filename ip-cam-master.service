@@ -1,0 +1,19 @@
+[Unit]
+Description=IP-Cam-Master
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ip-cam-master
+ExecStart=/usr/bin/node build/index.js
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=PORT=80
+EnvironmentFile=/opt/ip-cam-master/.env
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ip-cam-master
+
+[Install]
+WantedBy=multi-user.target

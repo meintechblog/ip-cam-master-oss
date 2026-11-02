@@ -1,0 +1,24 @@
+[Unit]
+Description=IP-Cam-Master self-update runner
+# Deliberately NOT BindsTo / PartOf / Requires the main service:
+# the updater needs to live in a sibling cgroup so the `stop` stage's
+# `systemctl stop ip-cam-master` does not kill it mid-flight.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/ip-cam-master
+EnvironmentFile=-/run/ip-cam-master-update.env
+ExecStart=/usr/local/bin/ip-cam-master-update.sh
+User=root
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ip-cam-master-updater
+TimeoutStartSec=900
+# No Restart=: the script handles its own two-stage rollback. Letting
+# systemd retry would re-trigger the install path while a rollback was
+# in flight — exactly the kind of race we want to avoid.
+
+[Install]
+WantedBy=multi-user.target
