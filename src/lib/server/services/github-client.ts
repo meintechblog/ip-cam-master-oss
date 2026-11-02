@@ -2,7 +2,7 @@
  * GitHub API client for self-update commit polling — see UPD-AUTO-03.
  *
  * Single method `checkLatestCommit({ etag?, timeoutMs? })` that fetches
- * the latest commit on `meintechblog/ip-cam-master` `main`. Sends
+ * the latest commit on `meintechblog/ip-cam-master-oss` `main`. Sends
  * `If-None-Match: <etag>` to avoid burning rate-limit quota when nothing
  * changed (304 = no quota consumed on the unauthenticated path).
  *
@@ -14,7 +14,7 @@
 import { CURRENT_SHA_SHORT } from '$lib/version';
 import type { LastCheckResult } from './update-state-store';
 
-const COMMITS_URL = 'https://api.github.com/repos/meintechblog/ip-cam-master/commits/main';
+const COMMITS_URL = 'https://api.github.com/repos/meintechblog/ip-cam-master-oss/commits/main';
 const DEFAULT_TIMEOUT_MS = 10_000;
 const COMMIT_MESSAGE_MAX_LEN = 200;
 

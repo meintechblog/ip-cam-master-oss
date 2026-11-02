@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ──────────────────────────────────────────────────────
 # IP-Cam-Master Installer (Proxmox Host)
-# Usage: curl -fsSL https://raw.githubusercontent.com/meintechblog/ip-cam-master/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/meintechblog/ip-cam-master-oss/main/install.sh | bash
 #
 # This script runs on the Proxmox host and creates a
 # Debian 12 VM with the app fully provisioned inside it.
@@ -22,7 +22,7 @@ done
 
 VM_NAME="ip-cam-master"
 VM_TAG="ip-cam-master"
-REPO_URL="https://github.com/meintechblog/ip-cam-master.git"
+REPO_URL="https://github.com/meintechblog/ip-cam-master-oss.git"
 APP_DIR="/opt/ip-cam-master"
 PVE_USER="ipcm@pve"
 PVE_TOKEN_NAME="ipcm"
@@ -312,7 +312,7 @@ if ! command -v node &>/dev/null || [ "$(node -v | cut -d. -f1 | tr -d v)" -lt 2
 fi
 
 # Clone repo
-git clone https://github.com/meintechblog/ip-cam-master.git /opt/ip-cam-master
+git clone https://github.com/meintechblog/ip-cam-master-oss.git /opt/ip-cam-master
 cd /opt/ip-cam-master
 
 # Full npm install (drizzle-kit and vite are devDependencies needed for build and DB push)

@@ -190,7 +190,7 @@ Each camera gets a full-width card with:
 One command on your Proxmox host — creates a VM with everything ready:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/meintechblog/ip-cam-master/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/meintechblog/ip-cam-master-oss/main/install.sh | bash
 ```
 
 The installer:
@@ -234,7 +234,7 @@ The entire pipeline (go2rtc config generation, LXC `/dev/dri` passthrough, ffmpe
 ### Development
 
 ```bash
-git clone https://github.com/meintechblog/ip-cam-master.git
+git clone https://github.com/meintechblog/ip-cam-master-oss.git ip-cam-master
 cd ip-cam-master
 npm install
 cp .env.example .env  # Set DB_ENCRYPTION_KEY (min 32 characters)
@@ -317,7 +317,7 @@ When enabled, the card shows the credentials you need in UniFi Protect's adoptio
 
 ### Auto-Update
 
-`Settings → Version` lets the app keep itself in sync with `meintechblog/ip-cam-master` on GitHub:
+`Settings → Version` lets the app keep itself in sync with `meintechblog/ip-cam-master-oss` on GitHub:
 
 - **Manual check + install** — "Jetzt prüfen" hits the GitHub commits API (ETag-cached, 5-min cooldown). "Jetzt updaten" opens a confirmation modal showing current → target SHA + commit metadata + any active flow conflicts (Hub bridge starting/stopping). Install runs through a 9-stage pipeline: preflight → snapshot → drain → stop → fetch → install → build → start → verify, with a live stage-stepper UI.
 - **Auto-update** — Toggle on + pick a daily hour (Europe/Berlin, default 03:00). The app checks every 6h and applies updates inside the configured hour, skipping if a Hub bridge is starting/stopping or the last auto-update was less than 23h ago. Each run is logged in the **history table** with `manuell` vs `auto` trigger.
