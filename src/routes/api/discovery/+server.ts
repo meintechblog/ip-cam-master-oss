@@ -46,14 +46,14 @@ async function readHead(res: Response, limit = 64 * 1024): Promise<string> {
 		while (size < limit) {
 			const { done, value } = await reader.read();
 			if (done) break;
-			chunks.push(value);
-			size += value.byteLength;
+			const part = value.subarray(0, limit - size);
+			chunks.push(part);
+			size += part.byteLength;
 		}
 	} finally {
 		await reader.cancel().catch(() => {});
 	}
-	const buf = Buffer.concat(chunks).subarray(0, limit);
-	return new TextDecoder('utf-8').decode(buf);
+	return new TextDecoder('utf-8').decode(Buffer.concat(chunks));
 }
 
 export interface DiscoveredCamera {
