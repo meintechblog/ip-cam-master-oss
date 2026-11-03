@@ -124,10 +124,15 @@ wait
 					discovered.filter((c) => !c.alreadyOnboarded).map(async (cam) => {
 						for (const cred of savedCreds) {
 							try {
-								const { stdout: html } = await execAsync(
-									`curl -s --basic -u "${cred.u}:${cred.p}" -L "http://${cam.ip}/" --max-time 2`,
-									{ timeout: 3000, encoding: 'utf-8' }
-								);
+								// fetch instead of a shell curl: credentials never reach a shell or the process list
+								const res = await fetch(`http://${cam.ip}/`, {
+									headers: {
+										Authorization: `Basic ${Buffer.from(`${cred.u}:${cred.p}`).toString('base64')}`
+									},
+									redirect: 'follow',
+									signal: AbortSignal.timeout(2000)
+								});
+								const html = await res.text();
 								const titleMatch = html.match(/<title>([^<]+)<\/title>/);
 								if (titleMatch) {
 									let name = titleMatch[1].replace(/ Live$/, '').replace(/Error.*/, '').trim();
