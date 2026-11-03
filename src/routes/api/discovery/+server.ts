@@ -12,6 +12,7 @@ import { promisify } from 'node:util';
 import { writeFileSync, unlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { parseScanParams, isIPv4, type ScanParams } from '$lib/server/services/discovery-params';
 
 // Fix common German umlaut replacements (Mobotix camera titles lack UTF-8)
 // Uses word-boundary-aware replacement to avoid false positives
@@ -68,9 +69,14 @@ export interface DiscoveredCamera {
 }
 
 export const GET: RequestHandler = async ({ url }) => {
-	const subnet = url.searchParams.get('subnet') || '192.168.1';
-	const rangeStart = parseInt(url.searchParams.get('start') || '1');
-	const rangeEnd = parseInt(url.searchParams.get('end') || '254');
+	// subnet/start/end go into a bash script below: accept strict numeric values only
+	let scan: ScanParams;
+	try {
+		scan = parseScanParams(url.searchParams);
+	} catch {
+		return json({ cameras: [], error: 'Invalid subnet or range' }, { status: 400 });
+	}
+	const { subnet, start: rangeStart, end: rangeEnd } = scan;
 
 	try {
 		const onboarded = new Set(
@@ -143,6 +149,7 @@ wait
 			if (savedCreds.length > 0) {
 				await Promise.allSettled(
 					discovered.filter((c) => !c.alreadyOnboarded).map(async (cam) => {
+						if (!isIPv4(cam.ip)) return;
 						for (const cred of savedCreds) {
 							try {
 								// fetch instead of a shell curl: credentials never reach a shell or the process list
