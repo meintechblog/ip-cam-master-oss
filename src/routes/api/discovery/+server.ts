@@ -35,6 +35,27 @@ function fixGermanUmlauts(name: string): string {
 
 const execAsync = promisify(exec);
 
+// Read at most `limit` bytes of a response body (the <title> sits in the page head;
+// keeps memory bounded like the old curl/execAsync buffer did)
+async function readHead(res: Response, limit = 64 * 1024): Promise<string> {
+	if (!res.body) return '';
+	const reader = res.body.getReader();
+	const chunks: Uint8Array[] = [];
+	let size = 0;
+	try {
+		while (size < limit) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			chunks.push(value);
+			size += value.byteLength;
+		}
+	} finally {
+		await reader.cancel().catch(() => {});
+	}
+	const buf = Buffer.concat(chunks).subarray(0, limit);
+	return new TextDecoder('utf-8').decode(buf);
+}
+
 export interface DiscoveredCamera {
 	ip: string;
 	type: 'mobotix' | 'mobotix-onvif' | 'loxone' | 'bambu' | 'unknown';
@@ -132,7 +153,7 @@ wait
 									redirect: 'follow',
 									signal: AbortSignal.timeout(2000)
 								});
-								const html = await res.text();
+								const html = await readHead(res);
 								const titleMatch = html.match(/<title>([^<]+)<\/title>/);
 								if (titleMatch) {
 									let name = titleMatch[1].replace(/ Live$/, '').replace(/Error.*/, '').trim();
