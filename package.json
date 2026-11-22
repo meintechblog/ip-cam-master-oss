@@ -2,6 +2,7 @@
 	"name": "ip-cam-master",
 	"private": true,
 	"version": "1.4.0",
+	"license": "MIT",
 	"type": "module",
 	"scripts": {
 		"gen:version": "node scripts/build/generate-version.mjs",
